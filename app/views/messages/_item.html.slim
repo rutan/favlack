@@ -1,0 +1,38 @@
+- limit = 20 unless defined?(limit)
+- stars = limit ? message.stars.limit(limit) : message.stars
+
+- if message.channel.hidden?
+  .uk-panel.uk-panel-box.uk-panel-box-secondary.uk-margin-bottom
+    p.uk-text-danger
+      | This channel is hidden
+
+- else
+  .uk-panel.uk-panel-box.uk-panel-box-secondary.uk-margin-bottom
+    article.uk-comment
+      .uk-comment-header
+        a href=user_path(message.user)
+          img.uk-comment-avatar src=message.user.avatar_url width=48 height=48
+        .uk-comment-meta
+          a href=user_path(message.user)
+            = "@#{message.user.name}"
+          span
+            | &nbsp;in&nbsp;
+            a.silent-link href=channel_path(message.channel)
+              = "##{message.channel.name}"
+          a.uk-margin-left.silent-link href=channel_message_path(channel_id: message.channel, ts: message.ts)
+            = l(message.posted_at)
+          a.uk-margin-left.silent-link href=message.permalink target='_blank'
+            i.fa.fa-paper-plane title='original log'
+        h2.uk-comment-title style='margin-left: 64px; word-wrap: break-word;'
+          = render_markdown(message.body)
+      hr
+      .uk-comment-body
+        .score style='width: 48px; float: left;'
+          .uk-text-center.uk-text-primary
+            .uk-text-large.uk-text-bold
+              = message.score
+            | star
+        .icons style='margin-left: 64px;'
+          - stars.each do |star|
+            a href=user_path(star.user) style='margin-right: 5px;'
+              img src=star.user.avatar_url alt=star.user.name width=36 height=36

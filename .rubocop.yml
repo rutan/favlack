@@ -1,0 +1,33 @@
+
+AllCops:
+  Exclude:
+    - config/secrets.yml
+    - db/schema.rb
+    - tmp/**/*
+    - log/**/*
+    - vendor/**/*
+
+AsciiComments:
+  Enabled: false
+
+Blocks:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+Encoding:
+  Enabled: false
+
+Lambda:
+  Enabled: false
+
+LineLength:
+  Max: 120
+
+RedundantSelf:
+  Enabled: false
+
+RegexpLiteral:
+  Enabled: false
+

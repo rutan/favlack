@@ -1,0 +1,10 @@
+- content_for(:title) { 'Channel List' }
+
+.uk-container.uk-container-center
+  h1
+    | Channel List
+
+  - @channels.each do |channel|
+    - next if channel.hidden?
+    a.uk-button href=channel_path(channel) style='margin: 3px;'
+      = "##{channel.name}"

@@ -1,0 +1,4 @@
+- content_for(:title) { "@#{@message.user.name}" }
+
+.uk-container.uk-container-center
+  = render 'item', message: @message, limit: false

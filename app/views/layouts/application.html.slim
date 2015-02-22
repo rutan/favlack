@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    meta charset='utf-8'
+    title
+      = (content_for?(:title) ? "#{yield(:title)} - #{site_title}" : site_title)
+    meta name='viewport' content='width=device-width,initial-scale=1'
+    = stylesheet_link_tag 'application', media: 'all'
+    = csrf_meta_tags
+  body
+    nav.uk-navbar
+      .uk-container.uk-container-center
+        a.uk-navbar-brand href='/'
+          = site_title
+
+        .uk-navbar-flip
+          uk.uk-navbar-nav
+            li
+              a href=channels_path
+                | Channel List
+            li
+              form#js-name-form.uk-form.uk-margin-left action='#'
+                input#js-name-input type='search' style='margin: 5px 0;' placeholder='@username...'
+
+    .uk-margin-top
+      == yield
+
+    footer.uk-margin-top.uk-margin-bottom
+      .uk-container.uk-container-center
+        hr
+        .uk-text-muted.uk-text-center
+          = site_title
+
+    = javascript_include_tag 'application'

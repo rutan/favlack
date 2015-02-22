@@ -1,0 +1,28 @@
+- content_for(:title) { "@#{@user.name}" }
+
+.uk-container.uk-container-center
+  .uk-grid
+    .uk-width-4-5
+      h1
+        = "@#{@user.name}"
+
+      - @messages.each do |message|
+        = render '/messages/item', message: message
+
+      == paginate(@messages)
+
+    .uk-width-1-5
+      ul.uk-nav.uk-nav-side.uk-nav-parent-icon
+        li.uk-nav-header
+          | Sort
+        li.uk-nav-divider
+        li class=('uk-active' if @type == :new)
+          a href=user_path(@user)
+            | New
+        li class=('uk-active' if @type == :popular)
+          a href=user_path(@user, filter: 'popular')
+            | Popular
+        li.uk-nav-divider
+        li class=('uk-active' if @type == :mine)
+          a href=user_mine_path(@user)
+            | self favs
