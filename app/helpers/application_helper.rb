@@ -9,17 +9,17 @@ module ApplicationHelper
       cushion_link: "#{cushion_path}?url="
     )
     @context ||= {
-      original_emoji_set: Rails.cache.fetch('emoji_data') {
+      original_emoji_set: Rails.cache.fetch('emoji_data', expires_in: 1.hours) {
         SlackRepository.new.client.emoji_list['emoji'] || {}
       },
       on_get_user: -> (uid) {
-        Rails.cache.fetch("user_data_#{uid}") do
-          user = User.find_or_fetch(SlackRepository.new, uid)
+        Rails.cache.fetch("user_data_#{uid}", expires_in: 1.hours) do
+          user = User.find_and_fetch(SlackRepository.new, uid)
           user ? { name: user.name, url: user_path(user) } : nil
         end
       },
       on_get_channel: -> (uid) {
-        Rails.cache.fetch("channel_data_#{uid}") do
+        Rails.cache.fetch("channel_data_#{uid}", expires_in: 1.hours) do
           channel = Channel.find_or_fetch(SlackRepository.new, uid)
           channel ? { name: channel.name, url: channel_path(channel) } : nil
         end

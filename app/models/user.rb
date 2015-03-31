@@ -52,4 +52,16 @@ class User < ActiveRecord::Base
     user.fetch(repository) if user.new_record?
     user.new_record? ? nil : user
   end
+
+  # ユーザ情報をDBから取得しSlackAPIに問い合わせる
+  # DB未登録時は新規に登録する
+  # @param [SlackRepository] repository
+  # @param [String] uid
+  # @return [User]
+  def self.find_and_fetch(repository, uid)
+    user = self.find_or_initialize_by(uid: uid)
+    user.fetch(repository)
+    user.new_record? ? nil : user
+  end
 end
+
